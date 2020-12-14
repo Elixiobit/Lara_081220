@@ -16,17 +16,27 @@ use \App\Http\Controllers\NewsController;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('home');
+
+/**
+ * Новости
+ */
+
+Route::group([
+   'prefix' => 'news',
+   'as' => 'news::',
+], function () {
+    Route::get('/',  [NewsController::class, 'index'])
+        ->name('categories');
+
+    Route::get('/card/{id}', [NewsController::class, 'newsCard'])
+        ->name('card')
+        ->where('id', '[0-9]+');
+
+    Route::get('/{categoryId}', [NewsController::class, 'list'])
+        ->name('list')
+        ->where('categoryId', '[0-9]+');
 });
-
-Route::get('/news', [
-    // 'uses' => [NewsController::class, 'index']
-    'uses' => '\App\Http\Controllers\NewsController@index'
-]);
-
-Route::get('/news/card/{id}', [NewsController::class, 'newsCard'])
-    ->name('news-card')
-    ->where('id', '[0-9]+');
-
 
 /**
  * Админка новостей
