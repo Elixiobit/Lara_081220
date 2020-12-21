@@ -12,10 +12,19 @@ class NewsController extends Controller
         echo "admin index"; exit;
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        echo "admin create"; exit;
+
+        return redirect()->route('admin::news::create');
+        /*$route = route('admin::news::create');
+        return response('')->header("Location", $route);*/
     }
+
+    public function createView()
+    {
+        return view('admin.news.create');
+    }
+
 
     public function update()
     {
