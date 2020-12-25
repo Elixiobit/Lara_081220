@@ -59,3 +59,5 @@ Route::group([
         ->name('update');
 });
 
+Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);
+

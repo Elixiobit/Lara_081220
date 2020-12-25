@@ -27,7 +27,9 @@ class NewsController extends Controller
 
     public function list($categoryId)
     {
-        $news = (new News())->getByCategoryId($categoryId);
+        $model = new News();
+        $news = $model->getByCategoryId($categoryId);
+
         return view(
             'news.list',
             [
