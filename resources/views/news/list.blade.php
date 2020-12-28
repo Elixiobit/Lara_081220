@@ -1,12 +1,13 @@
+
 @include('blocks.menu')
 
-@forelse ($news as $id => $item)
+@forelse ($news as $item)
     @php
-        $url = route('news::card', ['id' => $id]);
+        $url = route('news::card', ['id' => $item->id]);
     @endphp
 
     <div>
-        <a href='{{$url}}'>{{$item['title']}}</a>
+        <a href='{{$url}}'>{{$item->title}}</a>
     </div>
     @empty
         Новостей нет

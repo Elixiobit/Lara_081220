@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\News;
 use Illuminate\Support\Facades\DB;
 
 class DbController extends Controller
@@ -24,10 +24,13 @@ class DbController extends Controller
         $result = DB::select($sql, [':id' => 2]);
          dd($result);*/
 
-        $result = DB::table('news')
+       /* $result = DB::table('news')
             ->where(["id" => 3])
             ->get();
 
-        dd($result);
+        dd($result);*/
+
+        $model = News::find(4);
+        dump($model->category->news);
     }
 }

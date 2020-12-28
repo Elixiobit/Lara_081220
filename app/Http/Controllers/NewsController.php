@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class NewsController extends Controller
 {
@@ -27,8 +25,8 @@ class NewsController extends Controller
 
     public function list($categoryId)
     {
-        $model = new News();
-        $news = $model->getByCategoryId($categoryId);
+        /** @var News[] $news */
+        $news = (new News())->getByCategoryId($categoryId);
 
         return view(
             'news.list',
@@ -39,7 +37,7 @@ class NewsController extends Controller
 
     public function newsCard($id)
     {
-        $news = (new News())->getById($id);
+        $news = News::find($id);
         return view(
             'news.card',
             [

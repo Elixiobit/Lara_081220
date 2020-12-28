@@ -13,8 +13,10 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
+        for ($i = 0; $i < 10; $i++) {
         \DB::table('news')
             ->insert($this->generateData());
+        }
     }
 
     protected function generateData(): array
@@ -24,7 +26,8 @@ class NewsSeeder extends Seeder
             'title' => 'Test News' . uniqid(),
             'description' => 'Test News',
             'source' => 'yandex',
-            'publish_date' => date('Y-m-d')
+            'publish_date' => date('Y-m-d'),
+            'category_id' => (int) rand(1, 4),
         ];
         return $data;
     }
