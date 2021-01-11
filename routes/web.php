@@ -49,14 +49,17 @@ Route::group([
     Route::get('/', 'NewsController@index')
         ->name('index');
 
-    Route::get('/create', 'NewsController@createView')
+    Route::match(['get','post'], '/create', 'NewsController@create')
         ->name('create');
 
-    Route::post('/create', 'NewsController@create')
-        ->name('create_action');
+    Route::match(['post'], '/save', 'NewsController@save')
+        ->name('save');
 
-    Route::get('/update', 'NewsController@update')
+    Route::get('/update/{id}', 'NewsController@update')
         ->name('update');
+
+    Route::get('/delete/{id}', 'NewsController@delete')
+        ->name('delete');
 });
 
 Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);

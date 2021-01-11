@@ -13,4 +13,13 @@ class Category extends Model
     {
         return $this->hasMany(News::class);
     }
+
+    public function getCategories()
+    {
+        return [
+            1 => 'Здоровье',
+            2 => 'ИТ',
+            3 => 'Спорт'
+        ];
+    }
 }

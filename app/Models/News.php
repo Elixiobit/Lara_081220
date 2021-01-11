@@ -46,6 +46,17 @@ class News extends Model
         'category_id'
     ];
 
+    public static function rules()
+    {
+        return [
+            'title' => 'required|min:10|max:255|unique:news',
+            'description' => 'required',
+            'category_id' => 'required|exists:categories,id|integer',
+            'active' => 'boolean',
+            'publish_date' => 'date'
+        ];
+    }
+
     public function getByCategoryId(int $categoryId)
     {
         return static::query()
