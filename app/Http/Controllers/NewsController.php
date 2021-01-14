@@ -41,7 +41,7 @@ class NewsController extends Controller
         return view(
             'news.card',
             [
-                'news' => $news
+                'news' => $news,
             ]
         );
     }

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $news = News::query()
             ->orderBy('updated_at', 'desc')
@@ -44,6 +44,10 @@ class NewsController extends Controller
         $model = $id ? News::find($id) : new News();
         $model->fill($request->all());
         $model->save();
+
+        $validator = \Validator::make($request->all(), []);
+        $validator->failed();
+
         return redirect()->route("admin::news::update", ['id' => $model->id])
             ->with('success', "Данные сохранены");
     }

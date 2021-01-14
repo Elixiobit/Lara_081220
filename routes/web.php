@@ -44,7 +44,8 @@ Route::group([
 Route::group([
     'prefix' => '/admin/news',
     'as' => 'admin::news::',
-    'namespace' => '\App\Http\Controllers\Admin'
+    'namespace' => '\App\Http\Controllers\Admin',
+    'middleware' => ['auth'],
 ], function () {
     Route::get('/', 'NewsController@index')
         ->name('index');
@@ -62,5 +63,15 @@ Route::group([
         ->name('delete');
 });
 
-Route::get('/db', [\App\Http\Controllers\DbController::class, 'index']);
+Route::match(
+    ['get', 'post'],
+    '/admin/profile/update',
+    '\App\Http\Controllers\Admin\ProfileController@update',
+)->name('admin::profile::update');
 
+Route::get('login', '\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', '\App\Http\Controllers\Auth\LoginController@login');
+Route::post('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
