@@ -27,15 +27,15 @@ class AppServiceProvider extends ServiceProvider
     {
         $menu = [
         [
-            'title' => 'Главная',
+            'title' => __('menu.main'),
             'alias' => 'home'
         ],
         [
-            'title' => 'Новости',
+            'title' => __('menu.news'),
             'alias' => 'news::categories'
         ],
         [
-            'title' => 'Админка',
+            'title' => __('menu.admin'),
             'alias' => 'admin::news::index'
         ],
     ];

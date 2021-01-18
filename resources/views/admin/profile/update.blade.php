@@ -30,13 +30,14 @@
                            value="{{$user->email ?? old('email')}}">
                 </div>
                 <div class="form-group">
-                    <label>Текущий пароль</label>
-                    <input class="form-control" type="password" name="current_password">
-                </div>
-                <div class="form-group">
                     <label>Новый пароль</label>
                     <input class="form-control" type="password" name="password">
                 </div>
+                <div class="form-group">
+                    <label>Текущий пароль</label>
+                    <input class="form-control" type="password" name="current_password">
+                </div>
+
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" value="Save">
                 </div>

@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
+use \App\Http\Controllers\LocaleController;
+use \App\Http\Controllers\Admin\ParserController;
+use \App\Http\Controllers\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +26,10 @@ Route::get('/', function () {
  */
 
 Route::group([
-   'prefix' => 'news',
-   'as' => 'news::',
+    'prefix' => 'news',
+    'as' => 'news::',
 ], function () {
-    Route::get('/',  [NewsController::class, 'index'])
+    Route::get('/', [NewsController::class, 'index'])
         ->name('categories');
 
     Route::get('/card/{id}', [NewsController::class, 'newsCard'])
@@ -45,12 +48,12 @@ Route::group([
     'prefix' => '/admin/news',
     'as' => 'admin::news::',
     'namespace' => '\App\Http\Controllers\Admin',
-    'middleware' => ['auth'],
+    //   'middleware' => ['auth']
 ], function () {
     Route::get('/', 'NewsController@index')
         ->name('index');
 
-    Route::match(['get','post'], '/create', 'NewsController@create')
+    Route::match(['get', 'post'], '/create', 'NewsController@create')
         ->name('create');
 
     Route::match(['post'], '/save', 'NewsController@save')
@@ -63,15 +66,72 @@ Route::group([
         ->name('delete');
 });
 
-Route::match(
-    ['get', 'post'],
-    '/admin/profile/update',
-    '\App\Http\Controllers\Admin\ProfileController@update',
-)->name('admin::profile::update');
+/**
+ * Админка новостей
+ */
+$adminNewsRoutes = function () {
+    Route::group([
+        'prefix' => '/news',
+        'as' => 'news::',
+    ], function () {
+        Route::get('/', 'NewsController@index')
+            ->name('index');
+
+        Route::match(['get'], '/create', 'NewsController@create')
+            ->name('create');
+
+        Route::match(['post'], '/save', 'NewsController@save')
+            ->name('save');
+
+        Route::get('/update/{id}', 'NewsController@update')
+            ->name('update');
+
+        Route::get('/delete/{id}', 'NewsController@delete')
+            ->name('delete');
+    });
+};
+
+Route::group([
+    'prefix' => 'admin/',
+    'namespace' => '\App\Http\Controllers\Admin',
+    'as' => 'admin::',
+    'middleware' => ['auth', 'check_admin']
+], function () use ($adminNewsRoutes) {
+    $adminNewsRoutes();
+    //Профиль
+    Route::group([
+        'prefix' => 'profile',
+        'as' => 'profile::',
+    ], function () {
+        Route::post('update', 'ProfileController@update',
+        )->name('update');
+
+        Route::get('show', 'ProfileController@show',
+        )->name('show');
+    });
+
+    Route::get("parser", [ParserController::class, 'index'])
+        ->name('parser');
+});
+
+Route::group([
+    'prefix' => 'social',
+    'as' => 'social::',
+], function () {
+    Route::get('/login', [SocialController::class, 'loginVk'])
+        ->name('login-vk');
+    Route::get('/response', [SocialController::class, 'responseVk'])
+        ->name('response-vk');
+});
+
 
 Route::get('login', '\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', '\App\Http\Controllers\Auth\LoginController@login');
 Route::post('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
+
+Route::get('/locale/{lang}', [LocaleController::class, 'index'])
+    ->where('lang', '\w+')
+    ->name('locale');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,6 +1,10 @@
+@extends('layouts.main')
 
-@include('blocks.menu')
+@section('title')
+    Новости
+@endsection
 
+@section('content')
 @forelse ($news as $item)
     @php
         $url = route('news::card', ['id' => $item->id]);
@@ -12,3 +16,4 @@
     @empty
         Новостей нет
     @endforelse
+@endsection

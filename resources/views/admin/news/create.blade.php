@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        @if (session('success'))
+        @if (session())
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>

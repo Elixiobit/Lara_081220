@@ -20,7 +20,6 @@ class NewsController extends Controller
 
     public function create()
     {
-
         return view("admin.news.create", [
                 'model' => new News(),
                 'categories' => $this->getCategoriesList()
