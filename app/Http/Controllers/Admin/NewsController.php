@@ -29,9 +29,12 @@ class NewsController extends Controller
 
     public function update($id)
     {
+        $user = \Auth::user();
+        $this->authorize('view', News::find($id));
+
         return view("admin.news.create", [
                 'model' => News::find($id),
-                'categories' => $this->getCategoriesList()
+                'categories' => $this->getCategoriesList(),
             ]
         );
     }

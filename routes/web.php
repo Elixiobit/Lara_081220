@@ -41,6 +41,9 @@ Route::group([
         ->where('categoryId', '[0-9]+');
 });
 
+Route::match(['get', 'post'], '/news/upload', [NewsController::class, 'upload'])
+    ->name('upload');
+
 /**
  * Админка новостей
  */

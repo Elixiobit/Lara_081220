@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -43,6 +44,14 @@ class NewsController extends Controller
                 'news' => $news,
             ]
         );
+    }
+
+    public function upload(Request $request)
+    {
+        if($request->isMethod('post')){
+            $request->file('file')->store('uploads');
+        }
+        return view('news.upload');
     }
 
 

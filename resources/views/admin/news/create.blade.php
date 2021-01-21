@@ -62,9 +62,11 @@
                             ['dataformatas' =>'Y-m-d', 'class' => 'form-control'] )
                     !!}
                 </div>
+                @if(Gate::allows(\App\Abilities::IS_ADMIN))
                 <div class="form-group">
                     <input class="btn btn-success" type="submit" value="Save">
                 </div>
+                @endif
             {!! Form::close() !!}
         </div>
     </div>
